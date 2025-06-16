@@ -1,10 +1,11 @@
 
 
-
+( cd ../
 curl -L -O 'https://github.com/rwcitek/bash.scripting.codespaces/raw/refs/heads/main/.bash_aliases'
 curl -L -O 'https://github.com/rwcitek/bash.scripting.codespaces/raw/refs/heads/main/jupyter.light.sh'
+)
 
-
+# source .bash_aliases
 
 
 
@@ -16,7 +17,7 @@ xargs -I {} git clone https://github.com/{} {}
 
 
 
-# in Jupyter
+# rest can be done in Jupyter
 
 
 # run and convert to markdown
