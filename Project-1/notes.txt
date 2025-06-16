@@ -1,0 +1,68 @@
+
+
+
+curl -L -O 'https://github.com/rwcitek/bash.scripting.codespaces/raw/refs/heads/main/.bash_aliases'
+curl -L -O 'https://github.com/rwcitek/bash.scripting.codespaces/raw/refs/heads/main/jupyter.light.sh'
+
+
+
+
+
+# clone from github
+cat *.md |
+grep -o 'http.*ipynb$' |
+cut -d/ -f4-5 |
+xargs -I {} git clone https://github.com/{} {}
+
+
+
+# in Jupyter
+
+
+# run and convert to markdown
+cat *.md |
+grep -o 'http.*ipynb$' |
+cut -d/ -f4-5,8- |
+while read nb ; do
+  md=${nb##*/} ;
+  echo ==${nb} ;
+  [ -f ${nb/ipynb/md} ] && 
+    echo next || 
+    jupyter nbconvert --to markdown --execute ${nb}  --output ${md/ipynb/md}
+done
+
+
+# list all md files
+cat *.md |
+grep -o 'http.*ipynb$' |
+cut -d/ -f4-5,8- |
+sed -e 's/ipynb/md/' | 
+xargs ls -l
+
+
+# search for heading
+cat *.md |
+grep -o 'http.*ipynb$' |
+cut -d/ -f4-5,8- |
+sed -e 's/ipynb/md/' | 
+while read md ; do
+  echo == ${md}
+  cat ${md} |
+  sed -e 's/^ *(##)([^#])/$1 $2/' |
+  grep '^## ' |
+  cat -n
+done
+
+
+# search for GNB model
+cat *.md |
+grep -o 'http.*ipynb$' |
+cut -d/ -f4-5,8- |
+sed -e 's/ipynb/md/' | 
+while read md ; do
+  echo == ${md}
+  cat ${md} |
+  grep -n -C 5 'GaussianNB('
+done
+
+
