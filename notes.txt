@@ -7,6 +7,11 @@ curl -L -O 'https://github.com/rwcitek/bash.scripting.codespaces/raw/refs/heads/
 
 # source .bash_aliases
 
+# additional models
+pip install \
+  statsmodels \
+  tabulate \
+  ;
 
 
 # clone from github
