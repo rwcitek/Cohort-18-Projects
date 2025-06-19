@@ -49,13 +49,15 @@ sed -e 's/ipynb/md/' |
 while read md ; do
   echo == ${md}
   cat ${md} |
-  sed -e 's/^ *(##)([^#])/$1 $2/' |
+  sed -re 's/^ *(##)([^#])/\1 \2/' |
   grep '^## ' |
   cat -n
 done
 
 
-# search for GNB model
+# search for model
+##   grep -n -C 5 'GaussianNB('
+
 cat *.md |
 grep -o 'http.*ipynb$' |
 cut -d/ -f4-5,8- |
@@ -63,7 +65,7 @@ sed -e 's/ipynb/md/' |
 while read md ; do
   echo == ${md}
   cat ${md} |
-  grep -n -C 5 'GaussianNB('
+  egrep -n -C 5 '(LinearRegression|OLS|Lasso|Ridge)\('
 done
 
 
